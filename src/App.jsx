@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 
 import SideBar from './Component/SideBar';
 import './App.css';
@@ -20,6 +20,46 @@ import DeleteCars from './Component/DeleteCars';
 import EditCars from './Component/EditCars';
 import Read from './Component/Read';
 import UpdateCars from './Component/UpdateCars';
+
+function EditCarWrapper({ cars, editCar }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const carId = Number(id);
+  const player = cars.find((c) => c.id === carId);
+
+  if (!player) return <div>Car not found.</div>;
+
+  const handleEdit = (updated) => {
+    editCar(updated);
+    navigate('/read');
+  };
+
+  const handleCancel = () => {
+    navigate('/read');
+  };
+
+  return <EditCars player={player} editPlayer={handleEdit} onCancel={handleCancel} />;
+}
+
+function UpdateCarWrapper({ cars, editCar }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const carId = Number(id);
+  const player = cars.find((c) => c.id === carId);
+
+  if (!player) return <div>Car not found.</div>;
+
+  const handleUpdate = (updated) => {
+    editCar(updated);
+    navigate('/read');
+  };
+
+  const handleCancel = () => {
+    navigate('/read');
+  };
+
+  return <UpdateCars player={player} updatePlayer={handleUpdate} onCancel={handleCancel} />;
+}
 
 function App() {
   const [cars, setCars] = useState([]);
@@ -51,18 +91,11 @@ function App() {
           <Route path="/product-list" element={<ProductList />} />
 
           {/* Car CRUD Routes */}
-          <Route
-            path="/read"
-            element={<Read players={cars} onDelete={deleteCar} />}
-          />
-          <Route
-            path="/CreateCars"
-            element={<CreateCars addPlayer={addCar} />}
-          />
-          <Route path="/EditCars" element={<EditCars />} />
-          <Route path="/UpdateCars" element={<UpdateCars />} />
-          {/* Optional: Uncomment if using DeleteCars separately */}
-          {/* <Route path="/DeleteCars" element={<DeleteCars />} /> */}
+          <Route path="/read" element={<Read players={cars} onDelete={deleteCar} />}/>
+          <Route path="/create-car" element={<CreateCars addPlayer={addCar} onCancel={() => {}} />}/>
+          <Route path="/edit-car/:id" element={<EditCarWrapper cars={cars} editCar={editCar} />}/>
+          <Route path="/update-car/:id" element={<UpdateCarWrapper cars={cars} editCar={editCar} />}/>
+          <Route path="/delete-car/:id" element={<DeleteCars cars={cars} deleteCar={deleteCar} />}/>
         </Routes>
       </SideBar>
     </BrowserRouter>

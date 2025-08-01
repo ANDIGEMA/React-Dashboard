@@ -8,36 +8,12 @@ const SideBar = ({children}) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = ()=> setIsOpen(!isOpen);
   const menuItem = [
-    {
-      path: "/",
-      name: "Dashboard",
-      icon: <FaTh />
-    },
-    {
-      path: "/about",
-      name: "About",
-      icon: <FaUserAlt />
-    },
-    {
-      path: "/analytics",
-      name: "Analytics",
-      icon: <FaRegChartBar />
-    },
-    {
-      path: "/comments",
-      name: "Comments",
-      icon: <FaCommentAlt />
-    },
-    {
-      path: "/product",
-      name: "Product",
-      icon: <FaShoppingBag />
-    },
-    {
-      path: "/productList",
-      name: "ProductList",
-      icon: <FaThList />
-    }
+    { path: "/", name: "Dashboard", icon: <FaTh /> },
+    { path: "/about", name: "About", icon: <FaUserAlt /> },
+    { path: "/analytics", name: "Analytics", icon: <FaRegChartBar /> },
+    { path: "/comments", name: "Comments", icon: <FaCommentAlt /> },
+    { path: "/product", name: "Product", icon: <FaShoppingBag /> },
+    { path: "/productList", name: "ProductList", icon: <FaThList /> },
   ];
 
   return (
